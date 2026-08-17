@@ -3,834 +3,2973 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ท่าเรือเบ็ด — ร้านอุปกรณ์ตกปลา</title>
+
+<title>ท่าเรือเบ็ด | ร้านอุปกรณ์ตกปลา</title>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+
 <style>
+
+/* =========================================================
+   ROOT
+========================================================= */
+
 :root{
-  --navy-deep:#0A2530;
-  --navy:#0F303C;
-  --teal:#134656;
-  --brass:#C69749;
-  --brass-light:#E0BE86;
-  --rust:#BD4F2E;
-  --rust-light:#D97250;
-  --foam:#F1EAD9;
-  --foam-dim:#CFC6AF;
-  --seafoam:#7FA08F;
-  --line:rgba(241,234,217,0.14);
-  --shadow:0 12px 30px rgba(4,14,18,0.45);
+  --bg:#06151d;
+  --bg2:#0b2530;
+  --panel:rgba(8,28,37,.88);
+  --panel-light:rgba(16,54,66,.88);
+
+  --gold:#d5a94f;
+  --gold-light:#f0cf82;
+
+  --orange:#c9522f;
+  --orange-light:#e5724e;
+
+  --white:#f7f2e7;
+  --muted:#c6c1b4;
+
+  --green:#719d8c;
+
+  --border:rgba(255,255,255,.13);
+
+  --shadow:0 15px 45px rgba(0,0,0,.35);
 }
-*{box-sizing:border-box;}
-html,body{margin:0;padding:0;}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+*{
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
 body{
-  background:
-    radial-gradient(1200px 700px at 85% -10%, rgba(198,151,73,0.10), transparent 60%),
-    repeating-linear-gradient(45deg, rgba(241,234,217,0.025) 0px, rgba(241,234,217,0.025) 1px, transparent 1px, transparent 26px),
-    repeating-linear-gradient(-45deg, rgba(241,234,217,0.025) 0px, rgba(241,234,217,0.025) 1px, transparent 1px, transparent 26px),
-    var(--navy-deep);
-  color:var(--foam);
-  font-family:'Work Sans', sans-serif;
+  margin:0;
   min-height:100vh;
+
+  font-family:"Kanit",sans-serif;
+  color:var(--white);
+
+  background-color:var(--bg);
+
+  /*
+    รูปหน้าร้านเป็นพื้นหลังหลัก
+    ต้องวาง storefront-bg.png ไว้ข้าง index.html
+  */
+
+  background-image:
+    linear-gradient(
+      rgba(4,18,25,.72),
+      rgba(4,18,25,.90)
+    ),
+    url("storefront-bg.png");
+
+  background-size:cover;
+  background-position:center top;
+  background-repeat:no-repeat;
+  background-attachment:fixed;
 }
-h1,h2,h3,.display{
-  font-family:'Oswald', sans-serif;
+
+button,
+input{
+  font-family:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+img{
+  max-width:100%;
+}
+
+a{
+  color:inherit;
+}
+
+
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+.container{
+  width:min(1180px,calc(100% - 32px));
+  margin:auto;
+}
+
+.hidden{
+  display:none!important;
+}
+
+.section-label{
+  color:var(--gold-light);
+  font-family:"Oswald",sans-serif;
+  font-size:13px;
+  letter-spacing:.15em;
   text-transform:uppercase;
-  letter-spacing:0.04em;
-  color:var(--foam);
+
+  display:flex;
+  align-items:center;
+  gap:10px;
+
+  margin-bottom:10px;
+}
+
+.section-label::before{
+  content:"";
+  width:28px;
+  height:2px;
+  background:var(--gold);
+}
+
+h1,
+h2,
+h3{
   margin:0;
 }
-.mono{font-family:'JetBrains Mono', monospace;}
-a{color:inherit;}
-button{font-family:inherit; cursor:pointer;}
-::selection{background:var(--rust); color:var(--foam);}
 
-/* ===== Layout shell ===== */
-.wrap{max-width:1180px; margin:0 auto; padding:0 24px;}
+h1,
+h2,
+h3,
+.logo-text{
+  font-family:"Oswald","Kanit",sans-serif;
+}
 
-header.topbar{
-  position:sticky; top:0; z-index:50;
-  background:linear-gradient(180deg, rgba(10,37,48,0.97), rgba(10,37,48,0.90));
-  backdrop-filter:blur(6px);
-  border-bottom:1px solid var(--line);
+.page-title{
+  font-size:clamp(34px,5vw,54px);
+  line-height:1;
 }
-.topbar-inner{display:flex; align-items:center; justify-content:space-between; padding:16px 24px; gap:20px;}
-.brand{display:flex; align-items:center; gap:12px;}
-.brand-mark{
-  width:40px; height:40px; border-radius:50%;
-  background:radial-gradient(circle at 32% 28%, var(--brass-light), var(--brass) 55%, #8a6a35 100%);
-  display:flex; align-items:center; justify-content:center;
-  box-shadow:inset 0 0 0 2px rgba(10,37,48,0.35), var(--shadow);
-  flex-shrink:0;
-}
-.brand-mark svg{width:22px; height:22px;}
-.brand-name{font-size:20px; font-weight:600; line-height:1;}
-.brand-sub{font-size:10.5px; letter-spacing:0.16em; color:var(--seafoam); text-transform:uppercase; margin-top:3px;}
 
-/* Tackle-box drawer tabs */
-nav.tabs{display:flex; gap:6px;}
-.tab-btn{
-  position:relative;
-  background:var(--teal);
-  border:1px solid var(--line);
-  border-bottom:none;
-  color:var(--foam-dim);
-  padding:10px 18px 12px;
-  font-family:'Oswald', sans-serif;
-  font-size:13px;
-  letter-spacing:0.08em;
-  text-transform:uppercase;
-  border-radius:6px 6px 0 0;
-  transition:all .18s ease;
-  display:flex; align-items:center; gap:8px;
+.description{
+  color:var(--muted);
+  line-height:1.8;
 }
-.tab-btn .rivet{width:5px; height:5px; border-radius:50%; background:var(--brass); opacity:.6;}
-.tab-btn:hover{color:var(--foam); background:#1a5567;}
-.tab-btn.active{
-  background:var(--foam);
-  color:var(--navy-deep);
-  box-shadow:0 -4px 14px rgba(0,0,0,0.25);
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.header{
+  position:sticky;
+  top:0;
+  z-index:1000;
+
+  background:rgba(4,19,26,.90);
+  backdrop-filter:blur(14px);
+
+  border-bottom:1px solid var(--border);
 }
-.tab-btn.active .rivet{background:var(--rust); opacity:1;}
+
+.header-inner{
+  min-height:76px;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  gap:25px;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:12px;
+
+  text-decoration:none;
+}
+
+.logo-icon{
+  width:48px;
+  height:48px;
+
+  border-radius:50%;
+
+  background:
+    linear-gradient(135deg,
+      var(--gold-light),
+      var(--gold)
+    );
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  color:#08202a;
+
+  font-size:25px;
+
+  box-shadow:
+    0 5px 20px rgba(213,169,79,.22);
+}
+
+.logo-text{
+  font-size:25px;
+  font-weight:700;
+  line-height:1;
+}
+
+.logo-sub{
+  margin-top:3px;
+
+  font-size:10px;
+  color:var(--green);
+
+  letter-spacing:.16em;
+}
+
+.nav{
+  display:flex;
+  gap:7px;
+}
+
+.nav-btn{
+  border:1px solid transparent;
+
+  background:rgba(18,59,72,.75);
+  color:var(--muted);
+
+  padding:10px 17px;
+
+  border-radius:7px;
+
+  font-family:"Oswald",sans-serif;
+  font-size:14px;
+
+  transition:.2s;
+}
+
+.nav-btn:hover{
+  color:var(--white);
+  border-color:var(--gold);
+}
+
+.nav-btn.active{
+  background:var(--gold);
+  color:#071a22;
+  border-color:var(--gold);
+}
+
 .cart-badge{
-  background:var(--rust); color:var(--foam);
-  font-size:10px; font-weight:700; min-width:17px; height:17px; border-radius:9px;
-  display:inline-flex; align-items:center; justify-content:center; padding:0 4px;
-  font-family:'JetBrains Mono', monospace;
+  display:inline-flex;
+
+  min-width:20px;
+  height:20px;
+
+  align-items:center;
+  justify-content:center;
+
+  padding:0 5px;
+
+  margin-left:5px;
+
+  border-radius:50px;
+
+  background:var(--orange);
+  color:white;
+
+  font-size:11px;
 }
-.tab-btn.active .cart-badge{background:var(--rust);}
 
-main{padding:44px 0 90px;}
-.page{display:none; animation:fadeUp .4s ease;}
-.page.active{display:block;}
-@keyframes fadeUp{from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);}}
 
-/* ===== Reusable ===== */
-.eyebrow{
-  font-family:'JetBrains Mono', monospace;
-  font-size:11px; letter-spacing:0.14em; text-transform:uppercase;
-  color:var(--brass-light); display:flex; align-items:center; gap:8px; margin-bottom:10px;
+/* =========================================================
+   MAIN
+========================================================= */
+
+main{
+  padding:55px 0 100px;
 }
-.eyebrow::before{content:''; width:18px; height:1px; background:var(--brass-light);}
-.section-title{font-size:clamp(26px,4vw,38px); margin-bottom:6px;}
-.section-sub{color:var(--foam-dim); font-size:15px; max-width:560px; line-height:1.55; margin-bottom:28px;}
 
-.knot-divider{display:flex; align-items:center; gap:14px; margin:48px 0 28px; color:var(--brass);}
-.knot-divider svg{flex-shrink:0; opacity:.85;}
-.knot-divider .rope{flex:1; height:1px; background:linear-gradient(90deg, var(--line), transparent);}
+.page{
+  display:none;
 
-.pill{
-  display:inline-flex; align-items:center; gap:6px;
-  background:var(--teal); border:1px solid var(--line); color:var(--foam-dim);
-  padding:7px 14px; border-radius:100px; font-size:12.5px; cursor:pointer; user-select:none;
-  transition:all .15s ease;
+  animation:pageIn .35s ease;
 }
-.pill:hover{border-color:var(--brass);}
-.pill.on{background:var(--brass); color:var(--navy-deep); border-color:var(--brass); font-weight:600;}
+
+.page.active{
+  display:block;
+}
+
+@keyframes pageIn{
+  from{
+    opacity:0;
+    transform:translateY(10px);
+  }
+
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero{
+  min-height:570px;
+
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+
+  align-items:center;
+
+  gap:50px;
+
+  padding:45px;
+
+  border:1px solid var(--border);
+  border-radius:22px;
+
+  overflow:hidden;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(5,24,32,.92),
+      rgba(5,24,32,.62)
+    );
+
+  box-shadow:var(--shadow);
+
+  position:relative;
+}
+
+.hero::before{
+  content:"";
+
+  position:absolute;
+
+  inset:0;
+
+  background:
+    radial-gradient(
+      circle at 80% 40%,
+      rgba(213,169,79,.17),
+      transparent 35%
+    );
+
+  pointer-events:none;
+}
+
+.hero-content{
+  position:relative;
+  z-index:2;
+}
+
+.hero h1{
+  font-size:clamp(48px,7vw,82px);
+
+  line-height:.95;
+
+  letter-spacing:.02em;
+}
+
+.hero h1 span{
+  color:var(--gold-light);
+}
+
+.hero p{
+  max-width:620px;
+
+  margin:25px 0;
+
+  color:#d4d0c5;
+
+  line-height:1.9;
+
+  font-size:17px;
+}
+
+.hero-buttons{
+  display:flex;
+  flex-wrap:wrap;
+
+  gap:12px;
+}
 
 .btn{
-  display:inline-flex; align-items:center; justify-content:center; gap:8px;
-  border:none; border-radius:6px; padding:12px 22px;
-  font-family:'Oswald', sans-serif; font-size:13.5px; letter-spacing:0.06em; text-transform:uppercase;
-  font-weight:600; transition:all .15s ease;
-}
-.btn-primary{background:var(--rust); color:var(--foam);}
-.btn-primary:hover{background:var(--rust-light); transform:translateY(-1px);}
-.btn-ghost{background:transparent; color:var(--foam); border:1px solid var(--line);}
-.btn-ghost:hover{border-color:var(--brass); color:var(--brass-light);}
-.btn:disabled{opacity:.4; cursor:not-allowed; transform:none !important;}
+  border:none;
 
-/* ===== Home ===== */
-.hero{
-  display:grid; grid-template-columns:1.15fr 0.85fr; gap:48px; align-items:center;
-  padding-bottom:8px;
-}
-.hero-copy .section-title{font-size:clamp(34px,5.4vw,54px); line-height:1.03;}
-.hero-copy .section-title em{font-style:normal; color:var(--brass-light);}
-.hero-copy p{color:var(--foam-dim); font-size:16px; line-height:1.65; max-width:480px; margin:18px 0 26px;}
-.hero-actions{display:flex; gap:12px; flex-wrap:wrap;}
-.hero-stats{display:flex; gap:28px; margin-top:34px;}
-.hero-stats div{border-left:2px solid var(--brass); padding-left:12px;}
-.hero-stats .num{font-family:'Oswald',sans-serif; font-size:26px; color:var(--foam);}
-.hero-stats .lab{font-size:11px; color:var(--foam-dim); text-transform:uppercase; letter-spacing:.08em;}
+  padding:13px 22px;
 
-.hero-art{position:relative; aspect-ratio:1/1; display:flex; align-items:center; justify-content:center;}
-.hero-art .ring{position:absolute; border:1px dashed rgba(198,151,73,0.35); border-radius:50%;}
-.hero-art .ring.r1{width:100%; height:100%;}
-.hero-art .ring.r2{width:72%; height:72%; border-style:solid; border-color:rgba(127,160,143,0.25);}
-.hero-art svg{width:62%; height:62%; position:relative; z-index:2;}
+  border-radius:7px;
 
-.cat-strip{display:flex; gap:12px; flex-wrap:wrap; margin-top:6px;}
-.cat-chip{
-  background:var(--teal); border:1px solid var(--line);
-  padding:10px 16px; border-radius:8px; font-size:13px; color:var(--foam-dim);
-  display:flex; align-items:center; gap:8px; transition:all .15s ease; cursor:pointer;
-}
-.cat-chip:hover{border-color:var(--brass); color:var(--foam);}
-.cat-chip .dot{width:6px; height:6px; border-radius:50%; background:var(--seafoam);}
+  font-family:"Oswald",sans-serif;
 
-.grid-cards{display:grid; grid-template-columns:repeat(auto-fill, minmax(230px,1fr)); gap:18px;}
-.card{
-  background:linear-gradient(180deg, rgba(19,70,86,0.55), rgba(15,48,60,0.55));
-  border:1px solid var(--line); border-radius:10px; padding:18px;
-  transition:transform .18s ease, border-color .18s ease; position:relative; overflow:hidden;
-}
-.card:hover{transform:translateY(-3px); border-color:var(--brass);}
-.card .tag-featured{
-  position:absolute; top:12px; right:12px; background:var(--rust); color:var(--foam);
-  font-size:9.5px; letter-spacing:.08em; text-transform:uppercase; padding:4px 8px; border-radius:4px;
-  font-family:'JetBrains Mono',monospace;
-}
-.card .icon{font-size:30px; margin-bottom:12px; display:block;}
-.card h3{font-size:15.5px; font-weight:600; text-transform:none; letter-spacing:0; line-height:1.35; margin-bottom:6px; font-family:'Work Sans',sans-serif;}
-.card .cat{font-size:11px; color:var(--seafoam); text-transform:uppercase; letter-spacing:.06em; margin-bottom:10px;}
-.card .price-row{display:flex; align-items:center; justify-content:space-between; margin-top:12px;}
-.card .price{font-family:'Oswald',sans-serif; font-size:19px; color:var(--brass-light);}
-.card .price .old{font-family:'Work Sans',sans-serif; font-size:12px; color:var(--foam-dim); text-decoration:line-through; margin-right:6px;}
-.card-add{
-  background:var(--teal); border:1px solid var(--brass); color:var(--brass-light);
-  width:34px; height:34px; border-radius:7px; font-size:17px; display:flex; align-items:center; justify-content:center;
-  transition:all .15s ease;
-}
-.card-add:hover{background:var(--brass); color:var(--navy-deep);}
-.card-add.added{background:var(--seafoam); border-color:var(--seafoam); color:var(--navy-deep);}
-.stock-off{opacity:.5;}
-.stock-off .card-add{pointer-events:none; opacity:.4;}
-.badge-out{font-size:10px; color:var(--rust-light); font-family:'JetBrains Mono',monospace; margin-top:4px;}
+  font-size:14px;
 
-/* ===== Insight panel (shows the discrete-math working) ===== */
-.insight{
-  background:var(--navy); border:1px solid var(--brass); border-radius:10px;
-  padding:16px 18px; margin-bottom:26px; font-family:'JetBrains Mono',monospace; font-size:12.5px;
-  color:var(--foam-dim); line-height:1.85;
-}
-.insight strong{color:var(--brass-light); font-weight:600;}
-.insight .op{color:var(--seafoam);}
-.insight-title{color:var(--foam); font-family:'Oswald',sans-serif; text-transform:uppercase; letter-spacing:.06em; font-size:12px; margin-bottom:8px; display:flex; align-items:center; gap:8px;}
-.insight-title::before{content:'ƒ'; color:var(--rust-light); font-family:'JetBrains Mono',monospace;}
+  letter-spacing:.04em;
 
-/* ===== Products page ===== */
-.products-layout{display:grid; grid-template-columns:250px 1fr; gap:36px; align-items:start;}
-.filter-box{
-  background:var(--navy); border:1px solid var(--line); border-radius:10px; padding:20px;
-  position:sticky; top:96px;
+  transition:.2s;
 }
-.filter-box h4{font-size:12px; letter-spacing:.1em; color:var(--brass-light); margin:0 0 12px; font-family:'Oswald',sans-serif;}
-.filter-group{margin-bottom:22px;}
-.filter-group:last-child{margin-bottom:0;}
-.check-row{display:flex; align-items:center; gap:10px; padding:7px 0; font-size:13.5px; color:var(--foam-dim); cursor:pointer;}
-.check-row:hover{color:var(--foam);}
-.check-row input{accent-color:var(--rust); width:15px; height:15px;}
-.search-input{
-  width:100%; background:var(--navy-deep); border:1px solid var(--line); color:var(--foam);
-  padding:11px 14px; border-radius:7px; font-size:13.5px; margin-bottom:24px; font-family:'Work Sans',sans-serif;
-}
-.search-input:focus{outline:none; border-color:var(--brass);}
-.result-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:18px;}
-.result-count{font-size:13px; color:var(--foam-dim);}
-.result-count strong{color:var(--brass-light);}
-.empty-state{padding:50px 20px; text-align:center; color:var(--foam-dim); border:1px dashed var(--line); border-radius:10px;}
 
-/* ===== Checkout page ===== */
-.checkout-layout{display:grid; grid-template-columns:1.35fr 1fr; gap:40px; align-items:start;}
-.cart-row{
-  display:grid; grid-template-columns:44px 1fr auto auto; gap:14px; align-items:center;
-  padding:14px 0; border-bottom:1px solid var(--line);
+.btn-primary{
+  background:var(--orange);
+  color:white;
 }
-.cart-row .ic{font-size:24px; text-align:center;}
-.cart-row h4{font-size:14px; font-weight:600; font-family:'Work Sans',sans-serif; text-transform:none; letter-spacing:0; margin-bottom:3px;}
-.cart-row .cat{font-size:11px; color:var(--seafoam);}
-.qty-ctrl{display:flex; align-items:center; gap:8px; background:var(--navy); border:1px solid var(--line); border-radius:7px; padding:4px 6px;}
-.qty-ctrl button{background:none; border:none; color:var(--foam); width:22px; height:22px; font-size:15px;}
-.qty-ctrl button:hover{color:var(--brass-light);}
-.qty-ctrl span{min-width:16px; text-align:center; font-family:'JetBrains Mono',monospace; font-size:13px;}
-.line-price{font-family:'Oswald',sans-serif; color:var(--brass-light); font-size:15px; min-width:70px; text-align:right;}
-.remove-btn{background:none; border:none; color:var(--rust-light); font-size:11px; text-decoration:underline; margin-left:8px; font-family:'Work Sans',sans-serif;}
 
-.summary-box{background:var(--navy); border:1px solid var(--line); border-radius:12px; padding:24px; position:sticky; top:96px;}
-.summary-row{display:flex; justify-content:space-between; font-size:13.5px; color:var(--foam-dim); padding:8px 0;}
-.summary-row.total{border-top:1px solid var(--line); margin-top:10px; padding-top:16px; font-size:18px; color:var(--foam); font-family:'Oswald',sans-serif;}
-.summary-row.discount{color:var(--seafoam);}
-.promo-note{
-  display:flex; gap:10px; align-items:flex-start; background:rgba(127,160,143,0.1);
-  border:1px solid var(--seafoam); border-radius:8px; padding:12px 14px; margin:14px 0; font-size:12.5px; color:var(--foam-dim); line-height:1.6;
+.btn-primary:hover{
+  background:var(--orange-light);
+  transform:translateY(-2px);
 }
-.promo-note.warn{background:rgba(189,79,46,0.1); border-color:var(--rust);}
-.promo-note .ic{flex-shrink:0; font-size:16px;}
 
-.recommend-strip{display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:14px; margin-top:16px;}
-.mini-card{background:var(--teal); border:1px solid var(--line); border-radius:9px; padding:14px; text-align:left;}
-.mini-card .icon{font-size:22px; display:block; margin-bottom:8px;}
-.mini-card h5{font-size:13px; font-weight:600; margin:0 0 4px; text-transform:none; letter-spacing:0; font-family:'Work Sans',sans-serif;}
-.mini-card .price{font-size:13px; color:var(--brass-light); font-family:'Oswald',sans-serif; margin-bottom:10px;}
-.mini-add{width:100%; background:var(--navy-deep); border:1px solid var(--brass); color:var(--brass-light); padding:7px; border-radius:6px; font-size:11.5px; text-transform:uppercase; letter-spacing:.04em;}
-.mini-add:hover{background:var(--brass); color:var(--navy-deep);}
+.btn-secondary{
+  background:rgba(255,255,255,.05);
 
-footer{border-top:1px solid var(--line); padding:26px 0; text-align:center; color:var(--foam-dim); font-size:12px;}
+  border:1px solid var(--border);
 
-@media (max-width:860px){
-  .topbar-inner{flex-direction:column; align-items:stretch; gap:12px;}
-  nav.tabs{justify-content:stretch;}
-  .tab-btn{flex:1; justify-content:center;}
-  .hero{grid-template-columns:1fr;}
-  .hero-art{display:none;}
-  .products-layout, .checkout-layout{grid-template-columns:1fr;}
-  .filter-box{position:static;}
+  color:var(--white);
 }
-@media (prefers-reduced-motion: reduce){
-  *{animation:none !important; transition:none !important;}
+
+.btn-secondary:hover{
+  border-color:var(--gold);
+  color:var(--gold-light);
 }
+
+.hero-stats{
+  display:flex;
+  gap:35px;
+
+  margin-top:40px;
+}
+
+.stat{
+  padding-left:14px;
+
+  border-left:2px solid var(--gold);
+}
+
+.stat-number{
+  font-family:"Oswald",sans-serif;
+
+  font-size:28px;
+
+  color:var(--white);
+}
+
+.stat-label{
+  color:var(--muted);
+
+  font-size:11px;
+
+  letter-spacing:.04em;
+}
+
+.hero-logo{
+  position:relative;
+  z-index:2;
+
+  min-height:350px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.hero-circle{
+  width:min(360px,90vw);
+  aspect-ratio:1;
+
+  border-radius:50%;
+
+  border:1px solid rgba(213,169,79,.5);
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(213,169,79,.14),
+      rgba(6,21,29,.2) 55%,
+      transparent 70%
+    );
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  box-shadow:
+    0 0 70px rgba(213,169,79,.08);
+}
+
+.hero-fishing-icon{
+  font-size:130px;
+
+  filter:
+    drop-shadow(0 10px 20px rgba(0,0,0,.4));
+}
+
+
+/* =========================================================
+   CATEGORY
+========================================================= */
+
+.section{
+  margin-top:60px;
+}
+
+.category-list{
+  display:flex;
+  flex-wrap:wrap;
+
+  gap:10px;
+}
+
+.category{
+  border:1px solid var(--border);
+
+  background:rgba(12,47,59,.8);
+
+  color:var(--muted);
+
+  padding:10px 16px;
+
+  border-radius:50px;
+
+  cursor:pointer;
+
+  transition:.2s;
+}
+
+.category:hover{
+  border-color:var(--gold);
+  color:var(--gold-light);
+}
+
+
+/* =========================================================
+   PRODUCT CARDS
+========================================================= */
+
+.products{
+  display:grid;
+
+  grid-template-columns:
+    repeat(auto-fill,minmax(220px,1fr));
+
+  gap:18px;
+}
+
+.product{
+  position:relative;
+
+  overflow:hidden;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(14,55,68,.91),
+      rgba(7,30,39,.94)
+    );
+
+  border:1px solid var(--border);
+
+  border-radius:13px;
+
+  padding:20px;
+
+  transition:.2s;
+
+  box-shadow:0 10px 30px rgba(0,0,0,.18);
+}
+
+.product:hover{
+  transform:translateY(-5px);
+
+  border-color:var(--gold);
+
+  box-shadow:
+    0 15px 40px rgba(0,0,0,.32);
+}
+
+.product-icon{
+  height:100px;
+
+  display:flex;
+
+  align-items:center;
+  justify-content:center;
+
+  font-size:58px;
+
+  margin-bottom:15px;
+}
+
+.product-category{
+  color:var(--green);
+
+  font-size:11px;
+
+  letter-spacing:.08em;
+}
+
+.product-name{
+  font-family:"Kanit",sans-serif;
+
+  font-size:16px;
+
+  font-weight:500;
+
+  margin-top:5px;
+
+  line-height:1.4;
+}
+
+.product-bottom{
+  margin-top:16px;
+
+  display:flex;
+
+  align-items:center;
+  justify-content:space-between;
+
+  gap:10px;
+}
+
+.price{
+  font-family:"Oswald",sans-serif;
+
+  color:var(--gold-light);
+
+  font-size:22px;
+}
+
+.old-price{
+  color:#777;
+
+  font-size:12px;
+
+  text-decoration:line-through;
+
+  margin-right:5px;
+
+  font-family:"Kanit",sans-serif;
+}
+
+.add{
+  width:38px;
+  height:38px;
+
+  border-radius:7px;
+
+  border:1px solid var(--gold);
+
+  background:rgba(213,169,79,.08);
+
+  color:var(--gold-light);
+
+  font-size:21px;
+
+  transition:.2s;
+}
+
+.add:hover{
+  background:var(--gold);
+  color:#071a22;
+}
+
+.add.added{
+  background:var(--green);
+  border-color:var(--green);
+
+  color:#071a22;
+}
+
+.featured{
+  position:absolute;
+
+  top:12px;
+  right:12px;
+
+  background:var(--orange);
+
+  color:white;
+
+  padding:4px 8px;
+
+  border-radius:4px;
+
+  font-size:10px;
+}
+
+.out-stock{
+  opacity:.5;
+}
+
+.out-label{
+  color:var(--orange-light);
+
+  font-size:11px;
+
+  margin-top:5px;
+}
+
+
+/* =========================================================
+   PRODUCTS PAGE
+========================================================= */
+
+.products-layout{
+  display:grid;
+
+  grid-template-columns:250px 1fr;
+
+  gap:30px;
+
+  align-items:start;
+}
+
+.filter{
+  position:sticky;
+  top:100px;
+
+  background:rgba(7,28,37,.93);
+
+  border:1px solid var(--border);
+
+  border-radius:12px;
+
+  padding:20px;
+}
+
+.filter-title{
+  color:var(--gold-light);
+
+  font-family:"Oswald",sans-serif;
+
+  font-size:14px;
+
+  margin-bottom:10px;
+}
+
+.filter-group{
+  margin-bottom:22px;
+}
+
+.check{
+  display:flex;
+
+  align-items:center;
+
+  gap:9px;
+
+  padding:7px 0;
+
+  color:var(--muted);
+
+  font-size:14px;
+
+  cursor:pointer;
+}
+
+.check:hover{
+  color:var(--white);
+}
+
+.check input{
+  accent-color:var(--orange);
+
+  width:16px;
+  height:16px;
+}
+
+.search{
+  width:100%;
+
+  background:#061820;
+
+  color:var(--white);
+
+  border:1px solid var(--border);
+
+  border-radius:7px;
+
+  padding:11px 13px;
+
+  outline:none;
+
+  margin-bottom:20px;
+}
+
+.search:focus{
+  border-color:var(--gold);
+}
+
+.result-bar{
+  display:flex;
+
+  align-items:center;
+  justify-content:space-between;
+
+  margin-bottom:18px;
+
+  color:var(--muted);
+}
+
+.result-bar strong{
+  color:var(--gold-light);
+}
+
+
+/* =========================================================
+   CART
+========================================================= */
+
+.checkout{
+  display:grid;
+
+  grid-template-columns:1.3fr .7fr;
+
+  gap:30px;
+
+  align-items:start;
+}
+
+.cart-box{
+  background:rgba(7,29,38,.92);
+
+  border:1px solid var(--border);
+
+  border-radius:13px;
+
+  padding:20px;
+}
+
+.cart-item{
+  display:grid;
+
+  grid-template-columns:55px 1fr auto auto;
+
+  gap:15px;
+
+  align-items:center;
+
+  padding:15px 0;
+
+  border-bottom:1px solid var(--border);
+}
+
+.cart-item:last-child{
+  border-bottom:none;
+}
+
+.cart-icon{
+  font-size:32px;
+
+  text-align:center;
+}
+
+.cart-name{
+  font-weight:500;
+
+  font-size:15px;
+}
+
+.cart-category{
+  color:var(--green);
+
+  font-size:11px;
+}
+
+.qty{
+  display:flex;
+
+  align-items:center;
+
+  gap:5px;
+
+  border:1px solid var(--border);
+
+  background:#061820;
+
+  border-radius:7px;
+
+  padding:4px;
+}
+
+.qty button{
+  width:26px;
+  height:26px;
+
+  border:none;
+
+  background:none;
+
+  color:var(--white);
+
+  font-size:17px;
+}
+
+.qty button:hover{
+  color:var(--gold-light);
+}
+
+.qty span{
+  min-width:22px;
+
+  text-align:center;
+}
+
+.line-total{
+  min-width:90px;
+
+  text-align:right;
+
+  color:var(--gold-light);
+
+  font-family:"Oswald",sans-serif;
+}
+
+.remove{
+  display:block;
+
+  margin-top:3px;
+
+  margin-left:auto;
+
+  background:none;
+
+  border:none;
+
+  color:var(--orange-light);
+
+  font-size:11px;
+}
+
+.summary{
+  position:sticky;
+
+  top:100px;
+
+  background:rgba(7,29,38,.96);
+
+  border:1px solid var(--border);
+
+  border-radius:13px;
+
+  padding:24px;
+}
+
+.summary h3{
+  font-size:20px;
+
+  margin-bottom:18px;
+}
+
+.summary-row{
+  display:flex;
+
+  justify-content:space-between;
+
+  padding:8px 0;
+
+  color:var(--muted);
+
+  font-size:14px;
+}
+
+.summary-row.total{
+  border-top:1px solid var(--border);
+
+  margin-top:10px;
+
+  padding-top:18px;
+
+  color:var(--white);
+
+  font-family:"Oswald",sans-serif;
+
+  font-size:22px;
+}
+
+.discount{
+  color:var(--green)!important;
+}
+
+.note{
+  margin-top:12px;
+
+  padding:12px;
+
+  border-radius:8px;
+
+  border:1px solid rgba(113,157,140,.5);
+
+  background:rgba(113,157,140,.08);
+
+  color:var(--muted);
+
+  font-size:12px;
+
+  line-height:1.6;
+}
+
+.note.warning{
+  border-color:var(--orange);
+
+  background:rgba(201,82,47,.08);
+}
+
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+.empty{
+  text-align:center;
+
+  padding:60px 20px;
+
+  color:var(--muted);
+
+  border:1px dashed var(--border);
+
+  border-radius:12px;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer{
+  border-top:1px solid var(--border);
+
+  background:rgba(3,15,21,.9);
+
+  padding:35px 0;
+
+  text-align:center;
+
+  color:#aaa;
+
+  font-size:12px;
+}
+
+.footer strong{
+  color:var(--gold-light);
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:900px){
+
+  body{
+    background-attachment:scroll;
+  }
+
+  .header-inner{
+    flex-direction:column;
+
+    padding:12px 0;
+  }
+
+  .nav{
+    width:100%;
+  }
+
+  .nav-btn{
+    flex:1;
+  }
+
+  .hero{
+    grid-template-columns:1fr;
+
+    padding:30px 22px;
+
+    min-height:auto;
+  }
+
+  .hero-logo{
+    display:none;
+  }
+
+  .hero-stats{
+    flex-wrap:wrap;
+
+    gap:20px;
+  }
+
+  .products-layout{
+    grid-template-columns:1fr;
+  }
+
+  .filter{
+    position:static;
+  }
+
+  .checkout{
+    grid-template-columns:1fr;
+  }
+
+  .summary{
+    position:static;
+  }
+}
+
+@media(max-width:600px){
+
+  main{
+    padding-top:30px;
+  }
+
+  .container{
+    width:min(100% - 22px,1180px);
+  }
+
+  .logo-text{
+    font-size:22px;
+  }
+
+  .hero h1{
+    font-size:45px;
+  }
+
+  .hero p{
+    font-size:15px;
+  }
+
+  .hero-buttons{
+    flex-direction:column;
+  }
+
+  .hero-buttons .btn{
+    width:100%;
+  }
+
+  .products{
+    grid-template-columns:
+      repeat(2,minmax(0,1fr));
+
+    gap:10px;
+  }
+
+  .product{
+    padding:13px;
+  }
+
+  .product-icon{
+    height:75px;
+    font-size:45px;
+  }
+
+  .product-name{
+    font-size:13px;
+  }
+
+  .price{
+    font-size:18px;
+  }
+
+  .add{
+    width:34px;
+    height:34px;
+  }
+
+  .cart-item{
+    grid-template-columns:45px 1fr;
+
+    gap:10px;
+  }
+
+  .cart-item .qty,
+  .cart-item .line-total{
+    grid-column:2;
+  }
+
+  .line-total{
+    text-align:left;
+  }
+}
+
 </style>
 </head>
+
+
 <body>
 
-<header class="topbar">
-  <div class="topbar-inner wrap" style="padding-left:0; padding-right:0;">
-    <div class="brand">
-      <div class="brand-mark">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M12 2v9" stroke="#0A2530" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="4" r="2" fill="#0A2530"/><path d="M12 11c-3 2-4 5-2 8 1.3 2 4 2.5 5.5 0" stroke="#0A2530" stroke-width="2" stroke-linecap="round" fill="none"/></svg>
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+
+<header class="header">
+
+  <div class="container header-inner">
+
+    <a href="#" class="logo" onclick="goTo('home');return false;">
+
+      <div class="logo-icon">
+        🎣
       </div>
+
       <div>
-        <div class="brand-name">ท่าเรือเบ็ด</div>
-        <div class="brand-sub">Tackle &amp; Set Co.</div>
+        <div class="logo-text">
+          ท่าเรือเบ็ด
+        </div>
+
+        <div class="logo-sub">
+          FISHING TACKLE
+        </div>
       </div>
-    </div>
-    <nav class="tabs">
-      <button class="tab-btn active" data-page="home"><span class="rivet"></span>หน้าแรก</button>
-      <button class="tab-btn" data-page="products"><span class="rivet"></span>สินค้า</button>
-      <button class="tab-btn" data-page="checkout"><span class="rivet"></span>ตะกร้า <span class="cart-badge" id="navCartBadge">0</span></button>
+
+    </a>
+
+
+    <nav class="nav">
+
+      <button
+        class="nav-btn active"
+        data-page="home"
+      >
+        หน้าแรก
+      </button>
+
+      <button
+        class="nav-btn"
+        data-page="products"
+      >
+        สินค้า
+      </button>
+
+      <button
+        class="nav-btn"
+        data-page="cart"
+      >
+        ตะกร้า
+        <span
+          class="cart-badge"
+          id="cartBadge"
+        >0</span>
+      </button>
+
     </nav>
+
   </div>
+
 </header>
 
-<main class="wrap">
 
-  <!-- ============ PAGE 1: HOME ============ -->
-  <section id="page-home" class="page active">
-    <div class="hero">
-      <div class="hero-copy">
-        <div class="eyebrow">tackle box / discrete demo</div>
-        <h1 class="section-title">อุปกรณ์ตกปลา<br>สำหรับทุก<em>เส้นทางน้ำ</em></h1>
-        <p>ตั้งแต่สายเอ็นเส้นแรกจนถึงคันโปร เราจัดหมวดสินค้าด้วย <strong>เซต (Set)</strong> เพื่อให้คุณเจอของที่ใช่ไว ไม่ซ้ำ ไม่หลุดหมวด</p>
-        <div class="hero-actions">
-          <button class="btn btn-primary" onclick="goTo('products')">เลือกซื้อสินค้า</button>
-          <button class="btn btn-ghost" onclick="goTo('checkout')">ดูตะกร้าของฉัน</button>
-        </div>
-        <div class="hero-stats">
-          <div><div class="num" id="statCategories">–</div><div class="lab">หมวดหมู่ทั้งหมด</div></div>
-          <div><div class="num" id="statProducts">–</div><div class="lab">รายการสินค้า</div></div>
-          <div><div class="num" id="statCartMini">0</div><div class="lab">ในตะกร้าตอนนี้</div></div>
-        </div>
+
+<!-- =========================================================
+     MAIN
+========================================================= -->
+
+<main>
+
+<div class="container">
+
+
+<!-- =========================================================
+     HOME
+========================================================= -->
+
+<section
+  id="page-home"
+  class="page active"
+>
+
+  <div class="hero">
+
+    <div class="hero-content">
+
+      <div class="section-label">
+        TACKLE SHOP
       </div>
-      <div class="hero-art">
-        <div class="ring r1"></div>
-        <div class="ring r2"></div>
-        <svg viewBox="0 0 200 200" fill="none">
-          <path d="M100 20 L100 95" stroke="#C69749" stroke-width="2"/>
-          <circle cx="100" cy="18" r="6" fill="#C69749"/>
-          <path d="M100 95 C 60 120, 55 155, 85 175 C 110 190, 140 175, 130 150" stroke="#7FA08F" stroke-width="3" fill="none" stroke-linecap="round"/>
-          <circle cx="130" cy="150" r="4" fill="#BD4F2E"/>
-        </svg>
+
+      <h1>
+        ท่าเรือ<br>
+        <span>เบ็ด</span>
+      </h1>
+
+      <p>
+        ร้านอุปกรณ์ตกปลาสำหรับคนรักการตกปลา
+        รวมคันเบ็ด รอก เหยื่อ สายเอ็น
+        อุปกรณ์เสริม และอุปกรณ์สำหรับนักตกปลาทุกระดับ
+      </p>
+
+
+      <div class="hero-buttons">
+
+        <button
+          class="btn btn-primary"
+          onclick="goTo('products')"
+        >
+          🎣 เลือกซื้อสินค้า
+        </button>
+
+        <button
+          class="btn btn-secondary"
+          onclick="goTo('cart')"
+        >
+          🛒 ดูตะกร้า
+        </button>
+
       </div>
+
+
+      <div class="hero-stats">
+
+        <div class="stat">
+
+          <div
+            class="stat-number"
+            id="statProducts"
+          >
+            0
+          </div>
+
+          <div class="stat-label">
+            รายการสินค้า
+          </div>
+
+        </div>
+
+
+        <div class="stat">
+
+          <div
+            class="stat-number"
+            id="statCategories"
+          >
+            0
+          </div>
+
+          <div class="stat-label">
+            หมวดหมู่
+          </div>
+
+        </div>
+
+
+        <div class="stat">
+
+          <div
+            class="stat-number"
+            id="statCart"
+          >
+            0
+          </div>
+
+          <div class="stat-label">
+            ในตะกร้า
+          </div>
+
+        </div>
+
+      </div>
+
     </div>
 
-    <div class="knot-divider">
-      <svg width="26" height="26" viewBox="0 0 26 26"><circle cx="13" cy="13" r="9" stroke="#C69749" stroke-width="1.5" fill="none"/><circle cx="13" cy="13" r="3" fill="#C69749"/></svg>
-      <span class="mono" style="font-size:12px; color:var(--brass-light); text-transform:uppercase; letter-spacing:.1em;">หมวดหมู่สินค้า</span>
-      <div class="rope"></div>
+
+    <div class="hero-logo">
+
+      <div class="hero-circle">
+
+        <div class="hero-fishing-icon">
+          🎣
+        </div>
+
+      </div>
+
     </div>
-    <p class="section-sub" style="margin-bottom:16px;">
-      รายการหมวดหมู่ด้านล่างสร้างจากโค้ด <code class="mono">new Set(products.map(p =&gt; p.category))</code> — เพราะเซตเก็บค่าไม่ซ้ำ หมวดหมู่จึงถูกดึงออกมาแบบไม่มีชื่อซ้ำโดยอัตโนมัติ
+
+  </div>
+
+
+
+  <!-- CATEGORIES -->
+
+  <section class="section">
+
+    <div class="section-label">
+      CATEGORY
+    </div>
+
+    <h2 class="page-title">
+      หมวดหมู่สินค้า
+    </h2>
+
+    <p class="description">
+      เลือกอุปกรณ์ที่เหมาะกับสไตล์การตกปลาของคุณ
     </p>
-    <div class="cat-strip" id="categoryStrip"></div>
 
-    <div class="knot-divider">
-      <svg width="26" height="26" viewBox="0 0 26 26"><circle cx="13" cy="13" r="9" stroke="#C69749" stroke-width="1.5" fill="none"/><circle cx="13" cy="13" r="3" fill="#C69749"/></svg>
-      <span class="mono" style="font-size:12px; color:var(--brass-light); text-transform:uppercase; letter-spacing:.1em;">สินค้าแนะนำ</span>
-      <div class="rope"></div>
-    </div>
-    <div class="grid-cards" id="featuredGrid"></div>
+
+    <div
+      class="category-list"
+      id="categoryList"
+    ></div>
+
   </section>
 
-  <!-- ============ PAGE 2: PRODUCTS ============ -->
-  <section id="page-products" class="page">
-    <div class="eyebrow">products / set operations</div>
-    <h2 class="section-title">รายการสินค้าทั้งหมด</h2>
-    <p class="section-sub">กรองสินค้าได้หลายเงื่อนไขพร้อมกัน — ระบบคำนวณด้วยตรรกะเซตจริง: รวมกลุ่ม (Union) ภายในหมวดเดียวกัน แล้วตัดกัน (Intersection) ระหว่างหมวด และตัดสินค้าหมดสต๊อกออกด้วยผลต่าง (Difference)</p>
 
-    <div class="products-layout">
-      <aside class="filter-box">
-        <h4>ค้นหา</h4>
-        <input class="search-input" id="searchInput" placeholder="พิมพ์ชื่อสินค้า…" style="margin-bottom:22px;">
 
-        <div class="filter-group">
-          <h4>แหล่งน้ำ (Union)</h4>
-          <label class="check-row"><input type="checkbox" value="freshwater" class="f-water">น้ำจืด</label>
-          <label class="check-row"><input type="checkbox" value="saltwater" class="f-water">น้ำเค็ม</label>
-        </div>
-        <div class="filter-group">
-          <h4>ระดับผู้ใช้ (Union)</h4>
-          <label class="check-row"><input type="checkbox" value="beginner" class="f-level">มือใหม่</label>
-          <label class="check-row"><input type="checkbox" value="pro" class="f-level">มืออาชีพ</label>
-        </div>
-        <div class="filter-group">
-          <h4>อื่น ๆ</h4>
-          <label class="check-row"><input type="checkbox" id="f-sale">กำลังลดราคา</label>
-          <label class="check-row"><input type="checkbox" id="f-instock">แสดงเฉพาะที่มีสต๊อก (Difference)</label>
-        </div>
-        <button class="btn btn-ghost" style="width:100%; margin-top:6px;" onclick="clearFilters()">ล้างตัวกรองทั้งหมด</button>
-      </aside>
+  <!-- FEATURED -->
 
-      <div>
-        <div class="insight" id="filterInsight"></div>
-        <div class="result-head">
-          <div class="result-count">พบ <strong id="resultCount">0</strong> รายการ</div>
-        </div>
-        <div class="grid-cards" id="productsGrid"></div>
-      </div>
+  <section class="section">
+
+    <div class="section-label">
+      FEATURED
     </div>
+
+    <h2 class="page-title">
+      สินค้าแนะนำ
+    </h2>
+
+    <p class="description">
+      สินค้าที่นักตกปลาของเรานิยมเลือกใช้
+    </p>
+
+
+    <div
+      class="products"
+      id="featuredProducts"
+    ></div>
+
   </section>
 
-  <!-- ============ PAGE 3: CHECKOUT ============ -->
-  <section id="page-checkout" class="page">
-    <div class="eyebrow">checkout / logic &amp; set difference</div>
-    <h2 class="section-title">ตะกร้าสินค้า &amp; สรุปคำสั่งซื้อ</h2>
-    <p class="section-sub">ส่วนลดและค่าจัดส่งคำนวณจากเงื่อนไข if–else และตัวดำเนินการตรรกะ (&amp;&amp;, ||, !) ส่วนสินค้าแนะนำมาจากผลต่างของเซต: <span class="mono" style="font-size:12.5px;">สินค้าที่เกี่ยวข้อง − สินค้าที่มีอยู่แล้วในตะกร้า</span></p>
+</section>
 
-    <div class="checkout-layout">
-      <div>
-        <div id="cartList"></div>
-        <div class="knot-divider" id="recommendDivider" style="display:none;">
-          <svg width="26" height="26" viewBox="0 0 26 26"><circle cx="13" cy="13" r="9" stroke="#C69749" stroke-width="1.5" fill="none"/><circle cx="13" cy="13" r="3" fill="#C69749"/></svg>
-          <span class="mono" style="font-size:12px; color:var(--brass-light); text-transform:uppercase; letter-spacing:.1em;">อาจถูกใจเพิ่มเติม</span>
-          <div class="rope"></div>
+
+
+<!-- =========================================================
+     PRODUCTS PAGE
+========================================================= -->
+
+<section
+  id="page-products"
+  class="page"
+>
+
+  <div class="section-label">
+    PRODUCTS
+  </div>
+
+  <h2 class="page-title">
+    สินค้าทั้งหมด
+  </h2>
+
+  <p class="description">
+    ค้นหาและกรองอุปกรณ์ตกปลาที่คุณต้องการ
+  </p>
+
+
+  <div
+    class="products-layout"
+    style="margin-top:30px;"
+  >
+
+
+    <!-- FILTER -->
+
+    <aside class="filter">
+
+      <div class="filter-title">
+        ค้นหาสินค้า
+      </div>
+
+      <input
+        id="search"
+        class="search"
+        type="text"
+        placeholder="พิมพ์ชื่อสินค้า..."
+      >
+
+
+      <div class="filter-group">
+
+        <div class="filter-title">
+          แหล่งน้ำ
         </div>
-        <div class="recommend-strip" id="recommendStrip"></div>
+
+        <label class="check">
+          <input
+            type="checkbox"
+            class="water"
+            value="freshwater"
+          >
+          น้ำจืด
+        </label>
+
+        <label class="check">
+          <input
+            type="checkbox"
+            class="water"
+            value="saltwater"
+          >
+          น้ำเค็ม
+        </label>
+
       </div>
 
-      <div class="summary-box">
-        <h3 style="font-size:15px; margin-bottom:16px;">สรุปคำสั่งซื้อ</h3>
-        <div class="summary-row"><span>ยอดรวมสินค้า</span><span id="sumSubtotal">฿0</span></div>
-        <div class="summary-row discount" id="sumDiscountRow" style="display:none;"><span id="sumDiscountLabel">ส่วนลด</span><span id="sumDiscount">-฿0</span></div>
-        <div class="summary-row"><span>ค่าจัดส่ง</span><span id="sumShipping">฿0</span></div>
-        <div class="summary-row total"><span>ยอดชำระ</span><span id="sumTotal">฿0</span></div>
 
-        <div id="promoNotes"></div>
+      <div class="filter-group">
 
-        <button class="btn btn-primary" style="width:100%; margin-top:8px;" id="checkoutBtn">ยืนยันคำสั่งซื้อ</button>
-        <div class="insight" id="checkoutInsight" style="margin-top:16px; margin-bottom:0;"></div>
+        <div class="filter-title">
+          ระดับผู้ใช้
+        </div>
+
+        <label class="check">
+          <input
+            type="checkbox"
+            class="level"
+            value="beginner"
+          >
+          มือใหม่
+        </label>
+
+        <label class="check">
+          <input
+            type="checkbox"
+            class="level"
+            value="pro"
+          >
+          มืออาชีพ
+        </label>
+
       </div>
+
+
+      <div class="filter-group">
+
+        <div class="filter-title">
+          ตัวเลือกเพิ่มเติม
+        </div>
+
+        <label class="check">
+
+          <input
+            id="saleOnly"
+            type="checkbox"
+          >
+
+          สินค้าลดราคา
+
+        </label>
+
+
+        <label class="check">
+
+          <input
+            id="stockOnly"
+            type="checkbox"
+          >
+
+          เฉพาะสินค้าที่มีของ
+
+        </label>
+
+      </div>
+
+
+      <button
+        class="btn btn-secondary"
+        style="width:100%;"
+        onclick="clearFilters()"
+      >
+        ล้างตัวกรอง
+      </button>
+
+    </aside>
+
+
+
+    <!-- PRODUCT AREA -->
+
+    <div>
+
+      <div class="result-bar">
+
+        <span>
+          พบ
+          <strong id="resultCount">
+            0
+          </strong>
+          รายการ
+        </span>
+
+      </div>
+
+
+      <div
+        class="products"
+        id="productsGrid"
+      ></div>
+
     </div>
-  </section>
+
+  </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     CART PAGE
+========================================================= -->
+
+<section
+  id="page-cart"
+  class="page"
+>
+
+  <div class="section-label">
+    SHOPPING CART
+  </div>
+
+  <h2 class="page-title">
+    ตะกร้าสินค้า
+  </h2>
+
+  <p class="description">
+    ตรวจสอบสินค้าและยอดชำระก่อนสั่งซื้อ
+  </p>
+
+
+  <div
+    class="checkout"
+    style="margin-top:30px;"
+  >
+
+
+    <!-- CART -->
+
+    <div class="cart-box">
+
+      <div id="cartList"></div>
+
+    </div>
+
+
+    <!-- SUMMARY -->
+
+    <aside class="summary">
+
+      <h3>
+        สรุปคำสั่งซื้อ
+      </h3>
+
+
+      <div class="summary-row">
+
+        <span>
+          ยอดสินค้า
+        </span>
+
+        <span id="subtotal">
+          ฿0
+        </span>
+
+      </div>
+
+
+      <div
+        class="summary-row discount"
+        id="discountRow"
+        style="display:none;"
+      >
+
+        <span id="discountLabel">
+          ส่วนลด
+        </span>
+
+        <span id="discount">
+          -฿0
+        </span>
+
+      </div>
+
+
+      <div class="summary-row">
+
+        <span>
+          ค่าจัดส่ง
+        </span>
+
+        <span id="shipping">
+          ฿60
+        </span>
+
+      </div>
+
+
+      <div class="summary-row total">
+
+        <span>
+          ยอดชำระ
+        </span>
+
+        <span id="total">
+          ฿0
+        </span>
+
+      </div>
+
+
+      <div id="cartNotes"></div>
+
+
+      <button
+        id="checkoutButton"
+        class="btn btn-primary"
+        style="width:100%;margin-top:18px;"
+        disabled
+      >
+        ยืนยันคำสั่งซื้อ
+      </button>
+
+    </aside>
+
+  </div>
+
+</section>
+
+
+</div>
 
 </main>
 
-<footer>ท่าเรือเบ็ด — โปรเจกต์สาธิตหลักการดิสครีต (Set &amp; Logic) ด้วย JavaScript · ข้อมูลสินค้าทั้งหมดเป็นข้อมูลจำลอง</footer>
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer class="footer">
+
+  <div class="container">
+
+    <strong>
+      ท่าเรือเบ็ด
+    </strong>
+
+    — ร้านอุปกรณ์ตกปลา
+
+    <br>
+
+    คันเบ็ด • รอก • เหยื่อ • สายเอ็น • อุปกรณ์เสริม
+
+  </div>
+
+</footer>
+
+
 
 <script>
+
 /* =========================================================
-   ข้อมูลสินค้า (Product data)
-   ========================================================= */
+   PRODUCT DATA
+========================================================= */
+
 const PRODUCTS = [
-  {id:1,  name:"คันเบ็ดคาร์บอน โปรซีรีส์ X1", category:"คันเบ็ด",        price:2490, oldPrice:null, icon:"🎣", tags:["freshwater","pro","featured"], stock:true},
-  {id:2,  name:"คันเบ็ดสปินนิ่ง ไลท์ทัวร์ริ่ง", category:"คันเบ็ด",        price:890,  oldPrice:null, icon:"🎣", tags:["freshwater","beginner"], stock:true},
-  {id:3,  name:"รอกสปินนิ่ง เดปธ์มาสเตอร์ 4000", category:"รอก",            price:1650, oldPrice:null, icon:"🌀", tags:["saltwater","pro","featured"], stock:true},
-  {id:4,  name:"รอกเบทคาสติ้ง ไมโครโปร", category:"รอก",            price:2200, oldPrice:null, icon:"🌀", tags:["freshwater","pro"], stock:false},
-  {id:5,  name:"สายเอ็นถัก PE 4X 150 ม.", category:"สายเอ็น",        price:450,  oldPrice:590,  icon:"🧵", tags:["saltwater","beginner","sale"], stock:true},
-  {id:6,  name:"สายเอ็นโมโนใส 300 ม.", category:"สายเอ็น",        price:190,  oldPrice:null, icon:"🧵", tags:["freshwater","beginner"], stock:true},
-  {id:7,  name:"เบ็ดตัดคม เบอร์ 4 (แพ็ค 20)", category:"เบ็ด",           price:120,  oldPrice:150,  icon:"🪝", tags:["freshwater","beginner","sale"], stock:true},
-  {id:8,  name:"เหยื่อปลอมมินโนว์เรืองแสง", category:"เหยื่อปลอม",     price:260,  oldPrice:null, icon:"🐟", tags:["saltwater","pro","featured"], stock:true},
-  {id:9,  name:"เหยื่อยางหนอนซิลิโคน (แพ็ค 10)", category:"เหยื่อปลอม",     price:150,  oldPrice:null, icon:"🐛", tags:["freshwater","beginner"], stock:true},
-  {id:10, name:"ทัคเคิลบ็อกซ์ กล่องเก็บอุปกรณ์ XL", category:"กล่องเก็บอุปกรณ์", price:780,  oldPrice:null, icon:"🧰", tags:["freshwater","saltwater","featured"], stock:true},
-  {id:11, name:"สวิงตักปลา ด้ามยืดหด", category:"สวิง",           price:590,  oldPrice:null, icon:"🥅", tags:["freshwater","beginner"], stock:true},
-  {id:12, name:"เสื้อกันน้ำตกปลา เกรดโปร", category:"เสื้อผ้า",        price:1190, oldPrice:1490, icon:"🧥", tags:["saltwater","pro","sale"], stock:true},
-  {id:13, name:"กระติกน้ำแข็งพกพา 20L", category:"อุปกรณ์เสริม",    price:990,  oldPrice:null, icon:"🧊", tags:["saltwater","freshwater"], stock:true},
-  {id:14, name:"ไฟฉายคาดหัว ตกปลากลางคืน", category:"อุปกรณ์เสริม",    price:340,  oldPrice:420,  icon:"🔦", tags:["freshwater","saltwater","sale"], stock:false},
+
+  {
+    id:1,
+    name:"คันเบ็ดคาร์บอน โปรซีรีส์ X1",
+    category:"คันเบ็ด",
+    price:2490,
+    oldPrice:null,
+    icon:"🎣",
+    tags:["freshwater","pro","featured"],
+    stock:true
+  },
+
+  {
+    id:2,
+    name:"คันเบ็ดสปินนิ่ง ไลท์ทัวร์ริ่ง",
+    category:"คันเบ็ด",
+    price:890,
+    oldPrice:null,
+    icon:"🎣",
+    tags:["freshwater","beginner"],
+    stock:true
+  },
+
+  {
+    id:3,
+    name:"รอกสปินนิ่ง เดปธ์มาสเตอร์ 4000",
+    category:"รอก",
+    price:1650,
+    oldPrice:null,
+    icon:"🌀",
+    tags:["saltwater","pro","featured"],
+    stock:true
+  },
+
+  {
+    id:4,
+    name:"รอกเบทคาสติ้ง ไมโครโปร",
+    category:"รอก",
+    price:2200,
+    oldPrice:null,
+    icon:"🌀",
+    tags:["freshwater","pro"],
+    stock:false
+  },
+
+  {
+    id:5,
+    name:"สายเอ็นถัก PE 4X 150 ม.",
+    category:"สายเอ็น",
+    price:450,
+    oldPrice:590,
+    icon:"🧵",
+    tags:["saltwater","beginner","sale"],
+    stock:true
+  },
+
+  {
+    id:6,
+    name:"สายเอ็นโมโนใส 300 ม.",
+    category:"สายเอ็น",
+    price:190,
+    oldPrice:null,
+    icon:"🧵",
+    tags:["freshwater","beginner"],
+    stock:true
+  },
+
+  {
+    id:7,
+    name:"เบ็ดตัดคม เบอร์ 4 แพ็ค 20",
+    category:"เบ็ด",
+    price:120,
+    oldPrice:150,
+    icon:"🪝",
+    tags:["freshwater","beginner","sale"],
+    stock:true
+  },
+
+  {
+    id:8,
+    name:"เหยื่อปลอมมินโนว์เรืองแสง",
+    category:"เหยื่อปลอม",
+    price:260,
+    oldPrice:null,
+    icon:"🐟",
+    tags:["saltwater","pro","featured"],
+    stock:true
+  },
+
+  {
+    id:9,
+    name:"เหยื่อยางหนอนซิลิโคน แพ็ค 10",
+    category:"เหยื่อปลอม",
+    price:150,
+    oldPrice:null,
+    icon:"🐛",
+    tags:["freshwater","beginner"],
+    stock:true
+  },
+
+  {
+    id:10,
+    name:"กล่องเก็บอุปกรณ์ XL",
+    category:"กล่องเก็บอุปกรณ์",
+    price:780,
+    oldPrice:null,
+    icon:"🧰",
+    tags:["freshwater","saltwater","featured"],
+    stock:true
+  },
+
+  {
+    id:11,
+    name:"สวิงตักปลา ด้ามยืดหด",
+    category:"สวิง",
+    price:590,
+    oldPrice:null,
+    icon:"🥅",
+    tags:["freshwater","beginner"],
+    stock:true
+  },
+
+  {
+    id:12,
+    name:"เสื้อกันน้ำตกปลา เกรดโปร",
+    category:"เสื้อผ้า",
+    price:1190,
+    oldPrice:1490,
+    icon:"🧥",
+    tags:["saltwater","pro","sale"],
+    stock:true
+  },
+
+  {
+    id:13,
+    name:"กระติกน้ำแข็งพกพา 20L",
+    category:"อุปกรณ์เสริม",
+    price:990,
+    oldPrice:null,
+    icon:"🧊",
+    tags:["saltwater","freshwater"],
+    stock:true
+  },
+
+  {
+    id:14,
+    name:"ไฟฉายคาดหัวตกปลากลางคืน",
+    category:"อุปกรณ์เสริม",
+    price:340,
+    oldPrice:420,
+    icon:"🔦",
+    tags:["freshwater","saltwater","sale"],
+    stock:false
+  }
+
 ];
 
-const getProduct = id => PRODUCTS.find(p => p.id === id);
-const fmt = n => "฿" + n.toLocaleString("th-TH");
 
 /* =========================================================
-   เซต (Set) ตัวช่วยพื้นฐาน — Union / Intersection / Difference
-   ทั้งสามฟังก์ชันรับ-คืนค่าเป็น Set เสมอ ตรงตามนิยามดิสครีต
-   ========================================================= */
-function unionSets(a, b){
-  return new Set([...a, ...b]);              // A ∪ B
+   UTILITIES
+========================================================= */
+
+function money(number){
+
+  return "฿" + number.toLocaleString("th-TH");
+
 }
-function intersectSets(a, b){
-  return new Set([...a].filter(x => b.has(x))); // A ∩ B
+
+
+function getProduct(id){
+
+  return PRODUCTS.find(
+    product => product.id === id
+  );
+
 }
-function differenceSets(a, b){
-  return new Set([...a].filter(x => !b.has(x))); // A − B
-}
+
 
 /* =========================================================
-   localStorage: ตะกร้าสินค้า + ประวัติสินค้าที่เคยดู
-   ========================================================= */
-function loadCart(){
-  const raw = localStorage.getItem("tacklebox_cart");
-  return raw ? JSON.parse(raw) : {};   // { productId: qty }
-}
-function saveCart(cart){
-  localStorage.setItem("tacklebox_cart", JSON.stringify(cart));
-  renderCartBadge();
-}
-let cart = loadCart();
+   CART STORAGE
+========================================================= */
 
-function addToCart(id, btnEl){
-  cart[id] = (cart[id] || 0) + 1;
-  saveCart(cart);
-  if(btnEl){
-    btnEl.classList.add("added");
-    btnEl.textContent = "✓";
-    setTimeout(()=>{ btnEl.classList.remove("added"); btnEl.textContent = "+"; }, 900);
-  }
+let cart = JSON.parse(
+  localStorage.getItem("tahrua_bet_cart") || "{}"
+);
+
+
+function saveCart(){
+
+  localStorage.setItem(
+    "tahrua_bet_cart",
+    JSON.stringify(cart)
+  );
+
+  updateCartBadge();
+
 }
-function setQty(id, qty){
-  if(qty <= 0){ delete cart[id]; } else { cart[id] = qty; }
-  saveCart(cart);
-  renderCheckout();
-}
-function removeFromCart(id){
-  delete cart[id];
-  saveCart(cart);
-  renderCheckout();
-}
+
 
 function cartCount(){
-  // if-else: ตะกร้าว่างหรือไม่ ใช้ในหลายจุดของ UI
-  const ids = Object.keys(cart);
-  if(ids.length === 0){ return 0; }
-  else { return ids.reduce((sum, id) => sum + cart[id], 0); }
-}
-function renderCartBadge(){
-  const n = cartCount();
-  document.getElementById("navCartBadge").textContent = n;
-  const mini = document.getElementById("statCartMini");
-  if(mini) mini.textContent = n;
-}
 
-/* =========================================================
-   Navigation (if-else ควบคุมว่าหน้าไหนถูกแสดง)
-   ========================================================= */
-function goTo(pageName){
-  document.querySelectorAll(".page").forEach(p => {
-    if(p.id === "page-" + pageName){ p.classList.add("active"); }
-    else{ p.classList.remove("active"); }
-  });
-  document.querySelectorAll(".tab-btn").forEach(b => {
-    if(b.dataset.page === pageName){ b.classList.add("active"); }
-    else{ b.classList.remove("active"); }
-  });
-  if(pageName === "products") renderProducts();
-  if(pageName === "checkout") renderCheckout();
-  window.scrollTo({top:0, behavior:"smooth"});
-}
-document.querySelectorAll(".tab-btn").forEach(btn=>{
-  btn.addEventListener("click", ()=> goTo(btn.dataset.page));
-});
-
-/* =========================================================
-   PAGE 1: HOME
-   ========================================================= */
-function renderHome(){
-  // เซตของหมวดหมู่ — new Set() คัดค่าซ้ำออกให้อัตโนมัติ
-  const categorySet = new Set(PRODUCTS.map(p => p.category));
-  document.getElementById("statCategories").textContent = categorySet.size;
-  document.getElementById("statProducts").textContent = PRODUCTS.length;
-
-  const strip = document.getElementById("categoryStrip");
-  strip.innerHTML = "";
-  categorySet.forEach(cat => {
-    const chip = document.createElement("div");
-    chip.className = "cat-chip";
-    chip.innerHTML = `<span class="dot"></span>${cat}`;
-    chip.addEventListener("click", ()=>{
-      goTo("products");
-      // preset ค้นหาให้ตรงหมวดที่กด
-      document.getElementById("searchInput").value = "";
-      pendingCategory = cat;
-      renderProducts();
-    });
-    strip.appendChild(chip);
-  });
-
-  const featured = PRODUCTS.filter(p => p.tags.includes("featured"));
-  const grid = document.getElementById("featuredGrid");
-  grid.innerHTML = featured.map(cardHTML).join("");
-  bindAddButtons(grid);
-
-  renderCartBadge();
-}
-
-let pendingCategory = null;
-
-function cardHTML(p){
-  const stockClass = p.stock ? "" : "stock-off";
-  return `
-  <div class="card ${stockClass}">
-    ${p.tags.includes("featured") ? '<span class="tag-featured">แนะนำ</span>' : ""}
-    <span class="icon">${p.icon}</span>
-    <div class="cat">${p.category}</div>
-    <h3>${p.name}</h3>
-    <div class="price-row">
-      <div class="price">${p.oldPrice ? `<span class="old">${fmt(p.oldPrice)}</span>` : ""}${fmt(p.price)}</div>
-      <button class="card-add" data-id="${p.id}" ${p.stock ? "" : "disabled"}>+</button>
-    </div>
-    ${!p.stock ? '<div class="badge-out">สินค้าหมดชั่วคราว</div>' : ""}
-  </div>`;
-}
-function bindAddButtons(container){
-  container.querySelectorAll(".card-add").forEach(btn=>{
-    btn.addEventListener("click", ()=> addToCart(Number(btn.dataset.id), btn));
-  });
-}
-
-/* =========================================================
-   PAGE 2: PRODUCTS — Union / Intersection / Difference
-   ========================================================= */
-function renderProducts(){
-  const searchInput = document.getElementById("searchInput");
-  if(pendingCategory){ searchInput.value = pendingCategory; pendingCategory = null; }
-  const query = searchInput.value.trim().toLowerCase();
-
-  const waterChecked = [...document.querySelectorAll(".f-water:checked")].map(el => el.value);
-  const levelChecked  = [...document.querySelectorAll(".f-level:checked")].map(el => el.value);
-  const saleOnly    = document.getElementById("f-sale").checked;
-  const inStockOnly = document.getElementById("f-instock").checked;
-
-  const allIds = new Set(PRODUCTS.map(p => p.id));
-  let idsAfterWater = allIds;
-  let idsAfterLevel = allIds;
-
-  // --- UNION: รวมผลลัพธ์ของตัวเลือกที่ติ๊กภายในกลุ่มเดียวกัน ---
-  if(waterChecked.length > 0){
-    let acc = new Set(); // เซตว่าง เริ่มต้น union
-    waterChecked.forEach(tag => {
-      const idsWithTag = new Set(PRODUCTS.filter(p => p.tags.includes(tag)).map(p => p.id));
-      acc = unionSets(acc, idsWithTag);   // น้ำจืด ∪ น้ำเค็ม
-    });
-    idsAfterWater = acc;
-  }
-  if(levelChecked.length > 0){
-    let acc = new Set();
-    levelChecked.forEach(tag => {
-      const idsWithTag = new Set(PRODUCTS.filter(p => p.tags.includes(tag)).map(p => p.id));
-      acc = unionSets(acc, idsWithTag);   // มือใหม่ ∪ มืออาชีพ
-    });
-    idsAfterLevel = acc;
-  }
-
-  // --- INTERSECTION: ตัดกันระหว่างกลุ่มตัวกรองที่ต่างกัน ---
-  let resultIds = intersectSets(idsAfterWater, idsAfterLevel);
-
-  if(saleOnly){
-    const saleIds = new Set(PRODUCTS.filter(p => p.tags.includes("sale")).map(p => p.id));
-    resultIds = intersectSets(resultIds, saleIds);
-  }
-
-  // --- DIFFERENCE: ตัดสินค้าหมดสต๊อกออกจากผลลัพธ์ ---
-  if(inStockOnly){
-    const outOfStockIds = new Set(PRODUCTS.filter(p => !p.stock).map(p => p.id));
-    resultIds = differenceSets(resultIds, outOfStockIds);
-  }
-
-  // --- ค้นหาข้อความ: ใช้ includes() / has() / some() ---
-  let list = PRODUCTS.filter(p => resultIds.has(p.id));
-  if(query){
-    list = list.filter(p =>
-      p.name.toLowerCase().includes(query) ||
-      p.category.toLowerCase().includes(query) ||
-      p.tags.some(t => t.includes(query))
+  return Object.values(cart)
+    .reduce(
+      (total, quantity) => total + quantity,
+      0
     );
-  }
 
-  document.getElementById("resultCount").textContent = list.length;
-  const grid = document.getElementById("productsGrid");
-  if(list.length === 0){
-    grid.innerHTML = "";
-    grid.parentElement.querySelector(".empty-state")?.remove();
-    const empty = document.createElement("div");
-    empty.className = "empty-state";
-    empty.textContent = "ไม่พบสินค้าตรงกับตัวกรองที่เลือก ลองปรับเงื่อนไขดูอีกครั้ง";
-    grid.after(empty);
-  } else {
-    grid.parentElement.querySelector(".empty-state")?.remove();
-    grid.innerHTML = list.map(cardHTML).join("");
-  }
-  bindAddButtons(grid);
+}
 
-  // แผงแสดงการทำงานของเซต ณ ขณะนี้
-  const insight = document.getElementById("filterInsight");
-  insight.innerHTML = `
-    <div class="insight-title">การคำนวณเซตขณะนี้</div>
-    <span class="op">น้ำจืด/น้ำเค็ม</span> → union ได้ <strong>${idsAfterWater.size === PRODUCTS.length && waterChecked.length===0 ? "ทั้งหมด" : idsAfterWater.size}</strong> รายการ<br>
-    <span class="op">ระดับผู้ใช้</span> → union ได้ <strong>${idsAfterLevel.size === PRODUCTS.length && levelChecked.length===0 ? "ทั้งหมด" : idsAfterLevel.size}</strong> รายการ<br>
-    <span class="op">ตัดกัน (intersection)</span> ของสองกลุ่มบน${saleOnly ? " + กำลังลดราคา" : ""} → <strong>${(saleOnly ? intersectSets(intersectSets(idsAfterWater, idsAfterLevel), new Set(PRODUCTS.filter(p=>p.tags.includes("sale")).map(p=>p.id))) : intersectSets(idsAfterWater, idsAfterLevel)).size}</strong> รายการ<br>
-    ${inStockOnly ? `<span class="op">ผลต่าง (difference)</span> ตัดสินค้าหมดสต๊อก → เหลือ <strong>${resultIds.size}</strong> รายการ<br>` : ""}
-    ${query ? `<span class="op">ค้นหา</span> "${query}" (includes/some) → <strong>${list.length}</strong> รายการสุดท้าย` : `<span class="op">ผลลัพธ์สุดท้าย</span> → <strong>${list.length}</strong> รายการ`}
-  `;
+
+function updateCartBadge(){
+
+  const count = cartCount();
+
+  document.getElementById(
+    "cartBadge"
+  ).textContent = count;
+
+  document.getElementById(
+    "statCart"
+  ).textContent = count;
+
 }
-document.getElementById("searchInput").addEventListener("input", renderProducts);
-document.querySelectorAll(".f-water, .f-level").forEach(el => el.addEventListener("change", renderProducts));
-document.getElementById("f-sale").addEventListener("change", renderProducts);
-document.getElementById("f-instock").addEventListener("change", renderProducts);
-function clearFilters(){
-  document.querySelectorAll(".f-water, .f-level").forEach(el => el.checked = false);
-  document.getElementById("f-sale").checked = false;
-  document.getElementById("f-instock").checked = false;
-  document.getElementById("searchInput").value = "";
-  renderProducts();
-}
+
 
 /* =========================================================
-   PAGE 3: CHECKOUT — Logic (if/else, &&, ||, !) + Set difference
-   ========================================================= */
-function renderCheckout(){
-  const ids = Object.keys(cart).map(Number);
-  const cartList = document.getElementById("cartList");
+   ADD TO CART
+========================================================= */
 
-  if(ids.length === 0){
-    cartList.innerHTML = `<div class="empty-state">ตะกร้ายังว่างอยู่ — ไปเลือกสินค้าที่หน้าสินค้ากันก่อนเลย 🎣</div>`;
-    document.getElementById("recommendDivider").style.display = "none";
-    document.getElementById("recommendStrip").innerHTML = "";
-    document.getElementById("checkoutBtn").disabled = true;
-    updateSummary(0, [], 0);
-    document.getElementById("checkoutInsight").innerHTML = "";
-    renderCartBadge();
+function addToCart(id, button){
+
+  cart[id] = (cart[id] || 0) + 1;
+
+  saveCart();
+
+  if(button){
+
+    button.classList.add("added");
+
+    button.textContent = "✓";
+
+    setTimeout(() => {
+
+      button.classList.remove("added");
+
+      button.textContent = "+";
+
+    },700);
+
+  }
+
+}
+
+
+/* =========================================================
+   QUANTITY
+========================================================= */
+
+function changeQuantity(id, amount){
+
+  if(!cart[id]){
     return;
   }
-  document.getElementById("checkoutBtn").disabled = false;
 
-  cartList.innerHTML = ids.map(id => {
-    const p = getProduct(id);
-    const qty = cart[id];
-    return `
-    <div class="cart-row">
-      <div class="ic">${p.icon}</div>
-      <div>
-        <h4>${p.name}</h4>
-        <div class="cat">${p.category}</div>
-      </div>
-      <div class="qty-ctrl">
-        <button onclick="setQty(${id}, ${qty - 1})">−</button>
-        <span>${qty}</span>
-        <button onclick="setQty(${id}, ${qty + 1})">+</button>
-      </div>
-      <div>
-        <div class="line-price">${fmt(p.price * qty)}</div>
-        <button class="remove-btn" onclick="removeFromCart(${id})">ลบ</button>
-      </div>
-    </div>`;
-  }).join("");
+  cart[id] += amount;
 
-  // --- reduce(): คำนวณยอดรวมจากตะกร้า ---
-  const subtotal = ids.reduce((sum, id) => sum + getProduct(id).price * cart[id], 0);
-  const totalItems = ids.reduce((sum, id) => sum + cart[id], 0);
-  const cartCategorySet = new Set(ids.map(id => getProduct(id).category));
-  const hasSaleItem = ids.some(id => getProduct(id).tags.includes("sale"));
-
-  // --- ตรรกะโปรโมชั่น: if / else if / else ผสาน && || ! ---
-  let discountRate = 0;
-  let discountLabel = "";
-  if(subtotal >= 2000 && totalItems >= 2){
-    discountRate = 0.10;
-    discountLabel = "ส่วนลดลูกค้าช้อปคุ้ม 10%";
-  } else if(subtotal >= 1000 || hasSaleItem){
-    discountRate = 0.05;
-    discountLabel = "ส่วนลดสินค้าโปรโมชั่น 5%";
-  } else {
-    discountRate = 0;
-  }
-  const discountAmount = Math.round(subtotal * discountRate);
-
-  // ค่าส่งฟรีเมื่อมีคันเบ็ด "หรือ" รอกอยู่ในตะกร้า และยอดถึงขั้นต่ำ
-  const hasRodOrReel = cartCategorySet.has("คันเบ็ด") || cartCategorySet.has("รอก");
-  const freeShipping = hasRodOrReel && subtotal >= 800;
-  const shippingFee = freeShipping ? 0 : 60;
-
-  updateSummary(subtotal, [{label:discountLabel, amount:discountAmount}], shippingFee);
-
-  // --- ข้อความเตือน/แนะนำ ด้วย !, &&, || ---
-  const notes = document.getElementById("promoNotes");
-  notes.innerHTML = "";
-  if(discountAmount > 0){
-    notes.innerHTML += `<div class="promo-note"><span class="ic">🏷️</span><span>${discountLabel} — ประหยัดไป ${fmt(discountAmount)}</span></div>`;
-  }
-  if(freeShipping){
-    notes.innerHTML += `<div class="promo-note"><span class="ic">🚚</span><span>เข้าเงื่อนไขจัดส่งฟรี เพราะมีคันเบ็ดหรือรอกในตะกร้า และยอดถึง ฿800</span></div>`;
-  }
-  const hasReel = cartCategorySet.has("รอก");
-  const hasLine = cartCategorySet.has("สายเอ็น");
-  if(hasReel && !hasLine){
-    notes.innerHTML += `<div class="promo-note warn"><span class="ic">⚠️</span><span>มีรอกในตะกร้าแต่ยังไม่มีสายเอ็น — แนะนำให้เพิ่มสายเอ็นก่อนออกเรือ</span></div>`;
+  if(cart[id] <= 0){
+    delete cart[id];
   }
 
-  // --- Set difference: แนะนำสินค้าที่เกี่ยวข้องแต่ยังไม่มีในตะกร้า ---
-  const relatedIds = new Set(
-    PRODUCTS.filter(p => cartCategorySet.has(p.category) && p.stock).map(p => p.id)
-  );
-  const cartIdSet = new Set(ids);
-  const recommendIds = differenceSets(relatedIds, cartIdSet); // เกี่ยวข้อง − มีอยู่แล้ว
-  const recommendList = [...recommendIds].map(getProduct).slice(0, 4);
+  saveCart();
 
-  const strip = document.getElementById("recommendStrip");
-  const divider = document.getElementById("recommendDivider");
-  if(recommendList.length > 0){
-    divider.style.display = "flex";
-    strip.innerHTML = recommendList.map(p => `
-      <div class="mini-card">
-        <span class="icon">${p.icon}</span>
-        <h5>${p.name}</h5>
-        <div class="price">${fmt(p.price)}</div>
-        <button class="mini-add" data-id="${p.id}">+ เพิ่มลงตะกร้า</button>
-      </div>
-    `).join("");
-    strip.querySelectorAll(".mini-add").forEach(btn=>{
-      btn.addEventListener("click", ()=>{ addToCart(Number(btn.dataset.id)); renderCheckout(); });
-    });
-  } else {
-    divider.style.display = "none";
-    strip.innerHTML = "";
-  }
+  renderCart();
 
-  document.getElementById("checkoutInsight").innerHTML = `
-    <div class="insight-title">การคำนวณเบื้องหลัง</div>
-    หมวดในตะกร้า: <strong>{${[...cartCategorySet].join(", ")}}</strong><br>
-    สินค้าที่เกี่ยวข้อง (same category): <strong>${relatedIds.size}</strong> รายการ<br>
-    <span class="op">ผลต่าง (difference)</span> เกี่ยวข้อง − มีอยู่แล้ว → แนะนำ <strong>${recommendIds.size}</strong> รายการ
-  `;
-
-  renderCartBadge();
 }
 
-function updateSummary(subtotal, discounts, shippingFee){
-  document.getElementById("sumSubtotal").textContent = fmt(subtotal);
-  const discount = discounts.find(d => d.amount > 0);
-  const discountRow = document.getElementById("sumDiscountRow");
-  if(discount){
-    discountRow.style.display = "flex";
-    document.getElementById("sumDiscountLabel").textContent = discount.label;
-    document.getElementById("sumDiscount").textContent = "-" + fmt(discount.amount);
-  } else {
-    discountRow.style.display = "none";
-  }
-  document.getElementById("sumShipping").textContent = shippingFee === 0 ? "ฟรี" : fmt(shippingFee);
-  const total = subtotal - (discount ? discount.amount : 0) + shippingFee;
-  document.getElementById("sumTotal").textContent = fmt(Math.max(total,0));
-}
-
-document.getElementById("checkoutBtn").addEventListener("click", ()=>{
-  alert("ขอบคุณสำหรับคำสั่งซื้อ! (โปรเจกต์สาธิต ยังไม่เชื่อมระบบชำระเงินจริง)");
-});
 
 /* =========================================================
-   Init
-   ========================================================= */
+   REMOVE
+========================================================= */
+
+function removeFromCart(id){
+
+  delete cart[id];
+
+  saveCart();
+
+  renderCart();
+
+}
+
+
+/* =========================================================
+   PRODUCT CARD
+========================================================= */
+
+function productHTML(product){
+
+  const out =
+    product.stock
+      ? ""
+      : "out-stock";
+
+  const featured =
+    product.tags.includes("featured")
+      ? `<div class="featured">แนะนำ</div>`
+      : "";
+
+  const oldPrice =
+    product.oldPrice
+      ? `<span class="old-price">${money(product.oldPrice)}</span>`
+      : "";
+
+  return `
+
+    <article class="product ${out}">
+
+      ${featured}
+
+      <div class="product-icon">
+        ${product.icon}
+      </div>
+
+      <div class="product-category">
+        ${product.category}
+      </div>
+
+      <div class="product-name">
+        ${product.name}
+      </div>
+
+      <div class="product-bottom">
+
+        <div>
+
+          <div class="price">
+            ${oldPrice}
+            ${money(product.price)}
+          </div>
+
+          ${
+            !product.stock
+            ? `
+              <div class="out-label">
+                สินค้าหมดชั่วคราว
+              </div>
+            `
+            : ""
+          }
+
+        </div>
+
+
+        <button
+          class="add"
+          ${product.stock ? "" : "disabled"}
+          onclick="addToCart(${product.id},this)"
+        >
+          +
+        </button>
+
+      </div>
+
+    </article>
+
+  `;
+
+}
+
+
+/* =========================================================
+   HOME
+========================================================= */
+
+function renderHome(){
+
+  document.getElementById(
+    "statProducts"
+  ).textContent = PRODUCTS.length;
+
+
+  const categories = [
+    ...new Set(
+      PRODUCTS.map(
+        product => product.category
+      )
+    )
+  ];
+
+
+  document.getElementById(
+    "statCategories"
+  ).textContent = categories.length;
+
+
+  const categoryList =
+    document.getElementById(
+      "categoryList"
+    );
+
+
+  categoryList.innerHTML =
+    categories.map(category => `
+
+      <button
+        class="category"
+        onclick="filterCategory('${category}')"
+      >
+        🎣 ${category}
+      </button>
+
+    `).join("");
+
+
+  const featured =
+    PRODUCTS.filter(
+      product =>
+        product.tags.includes("featured")
+    );
+
+
+  document.getElementById(
+    "featuredProducts"
+  ).innerHTML =
+    featured.map(productHTML).join("");
+
+}
+
+
+/* =========================================================
+   CATEGORY FILTER
+========================================================= */
+
+function filterCategory(category){
+
+  goTo("products");
+
+  document.getElementById(
+    "search"
+  ).value = category;
+
+  renderProducts();
+
+}
+
+
+/* =========================================================
+   PRODUCTS FILTER
+========================================================= */
+
+function renderProducts(){
+
+  const search =
+    document.getElementById(
+      "search"
+    ).value
+    .trim()
+    .toLowerCase();
+
+
+  const waters =
+    [...document.querySelectorAll(".water:checked")]
+      .map(input => input.value);
+
+
+  const levels =
+    [...document.querySelectorAll(".level:checked")]
+      .map(input => input.value);
+
+
+  const saleOnly =
+    document.getElementById(
+      "saleOnly"
+    ).checked;
+
+
+  const stockOnly =
+    document.getElementById(
+      "stockOnly"
+    ).checked;
+
+
+  let result = [...PRODUCTS];
+
+
+  /*
+    Filter water
+  */
+
+  if(waters.length){
+
+    result = result.filter(product =>
+      waters.some(
+        tag => product.tags.includes(tag)
+      )
+    );
+
+  }
+
+
+  /*
+    Filter level
+  */
+
+  if(levels.length){
+
+    result = result.filter(product =>
+      levels.some(
+        tag => product.tags.includes(tag)
+      )
+    );
+
+  }
+
+
+  /*
+    Sale
+  */
+
+  if(saleOnly){
+
+    result = result.filter(
+      product =>
+        product.tags.includes("sale")
+    );
+
+  }
+
+
+  /*
+    Stock
+  */
+
+  if(stockOnly){
+
+    result = result.filter(
+      product => product.stock
+    );
+
+  }
+
+
+  /*
+    Search
+  */
+
+  if(search){
+
+    result = result.filter(product => {
+
+      return (
+
+        product.name
+          .toLowerCase()
+          .includes(search)
+
+        ||
+
+        product.category
+          .toLowerCase()
+          .includes(search)
+
+        ||
+
+        product.tags
+          .some(tag =>
+            tag.toLowerCase().includes(search)
+          )
+
+      );
+
+    });
+
+  }
+
+
+  document.getElementById(
+    "resultCount"
+  ).textContent = result.length;
+
+
+  const grid =
+    document.getElementById(
+      "productsGrid"
+    );
+
+
+  if(result.length === 0){
+
+    grid.innerHTML = `
+
+      <div
+        class="empty"
+        style="grid-column:1/-1;"
+      >
+        ไม่พบสินค้าที่ค้นหา
+        <br>
+        ลองเปลี่ยนคำค้นหาหรือตัวกรอง
+      </div>
+
+    `;
+
+  }else{
+
+    grid.innerHTML =
+      result.map(productHTML).join("");
+
+  }
+
+}
+
+
+/* =========================================================
+   CLEAR FILTER
+========================================================= */
+
+function clearFilters(){
+
+  document.getElementById(
+    "search"
+  ).value = "";
+
+
+  document.querySelectorAll(
+    ".water,.level"
+  ).forEach(input => {
+
+    input.checked = false;
+
+  });
+
+
+  document.getElementById(
+    "saleOnly"
+  ).checked = false;
+
+
+  document.getElementById(
+    "stockOnly"
+  ).checked = false;
+
+
+  renderProducts();
+
+}
+
+
+/* =========================================================
+   CART RENDER
+========================================================= */
+
+function renderCart(){
+
+  const ids =
+    Object.keys(cart).map(Number);
+
+
+  const list =
+    document.getElementById(
+      "cartList"
+    );
+
+
+  if(ids.length === 0){
+
+    list.innerHTML = `
+
+      <div class="empty">
+
+        🛒
+
+        <br><br>
+
+        ตะกร้าของคุณยังว่างอยู่
+
+        <br>
+
+        ไปเลือกอุปกรณ์ตกปลากันก่อนเลย 🎣
+
+      </div>
+
+    `;
+
+    updateSummary(
+      0,
+      0,
+      60
+    );
+
+    document.getElementById(
+      "checkoutButton"
+    ).disabled = true;
+
+    return;
+
+  }
+
+
+  document.getElementById(
+    "checkoutButton"
+  ).disabled = false;
+
+
+  list.innerHTML =
+    ids.map(id => {
+
+      const product =
+        getProduct(id);
+
+      const quantity =
+        cart[id];
+
+      return `
+
+        <div class="cart-item">
+
+          <div class="cart-icon">
+            ${product.icon}
+          </div>
+
+
+          <div>
+
+            <div class="cart-name">
+              ${product.name}
+            </div>
+
+            <div class="cart-category">
+              ${product.category}
+            </div>
+
+          </div>
+
+
+          <div class="qty">
+
+            <button
+              onclick="changeQuantity(${id},-1)"
+            >
+              −
+            </button>
+
+            <span>
+              ${quantity}
+            </span>
+
+            <button
+              onclick="changeQuantity(${id},1)"
+            >
+              +
+            </button>
+
+          </div>
+
+
+          <div class="line-total">
+
+            ${money(
+              product.price * quantity
+            )}
+
+            <button
+              class="remove"
+              onclick="removeFromCart(${id})"
+            >
+              ลบ
+            </button>
+
+          </div>
+
+        </div>
+
+      `;
+
+    }).join("");
+
+
+  calculateCart();
+
+}
+
+
+/* =========================================================
+   CART CALCULATION
+========================================================= */
+
+function calculateCart(){
+
+  const ids =
+    Object.keys(cart).map(Number);
+
+
+  const subtotal =
+    ids.reduce(
+      (total,id) => {
+
+        const product =
+          getProduct(id);
+
+        return total +
+          product.price * cart[id];
+
+      },
+      0
+    );
+
+
+  const itemCount =
+    cartCount();
+
+
+  const hasSale =
+    ids.some(id =>
+      getProduct(id)
+        .tags.includes("sale")
+    );
+
+
+  /*
+    ส่วนลด
+  */
+
+  let discount = 0;
+  let discountLabel = "";
+
+
+  if(
+    subtotal >= 2000 &&
+    itemCount >= 2
+  ){
+
+    discount =
+      Math.round(
+        subtotal * .10
+      );
+
+    discountLabel =
+      "ส่วนลด 10%";
+
+  }
+
+  else if(
+    subtotal >= 1000 ||
+    hasSale
+  ){
+
+    discount =
+      Math.round(
+        subtotal * .05
+      );
+
+    discountLabel =
+      "ส่วนลด 5%";
+
+  }
+
+
+  /*
+    จัดส่งฟรี
+  */
+
+  const categories =
+    ids.map(
+      id => getProduct(id).category
+    );
+
+
+  const freeShipping =
+    (
+      categories.includes("คันเบ็ด") ||
+      categories.includes("รอก")
+    )
+    &&
+    subtotal >= 800;
+
+
+  const shipping =
+    freeShipping
+      ? 0
+      : 60;
+
+
+  updateSummary(
+    subtotal,
+    discount,
+    shipping,
+    discountLabel,
+    freeShipping,
+    hasSale
+  );
+
+}
+
+
+/* =========================================================
+   UPDATE SUMMARY
+========================================================= */
+
+function updateSummary(
+  subtotal,
+  discount,
+  shipping,
+  discountLabel="",
+  freeShipping=false,
+  hasSale=false
+){
+
+  document.getElementById(
+    "subtotal"
+  ).textContent =
+    money(subtotal);
+
+
+  const discountRow =
+    document.getElementById(
+      "discountRow"
+    );
+
+
+  if(discount > 0){
+
+    discountRow.style.display =
+      "flex";
+
+    document.getElementById(
+      "discountLabel"
+    ).textContent =
+      discountLabel;
+
+    document.getElementById(
+      "discount"
+    ).textContent =
+      "-" + money(discount);
+
+  }else{
+
+    discountRow.style.display =
+      "none";
+
+  }
+
+
+  document.getElementById(
+    "shipping"
+  ).textContent =
+    freeShipping
+      ? "ฟรี"
+      : money(shipping);
+
+
+  const total =
+    Math.max(
+      subtotal -
+      discount +
+      shipping,
+      0
+    );
+
+
+  document.getElementById(
+    "total"
+  ).textContent =
+    money(total);
+
+
+  const notes =
+    document.getElementById(
+      "cartNotes"
+    );
+
+
+  let html = "";
+
+
+  if(discount > 0){
+
+    html += `
+
+      <div class="note">
+
+        🏷️
+
+        คุณได้รับ
+        <strong>
+          ${discountLabel}
+        </strong>
+
+        ประหยัด
+        ${money(discount)}
+
+      </div>
+
+    `;
+
+  }
+
+
+  if(freeShipping){
+
+    html += `
+
+      <div class="note">
+
+        🚚
+
+        คุณได้รับ
+        <strong>จัดส่งฟรี</strong>
+
+      </div>
+
+    `;
+
+  }
+
+
+  if(hasSale){
+
+    html += `
+
+      <div class="note">
+
+        🎁
+
+        ในตะกร้ามีสินค้าราคาพิเศษ
+
+      </div>
+
+    `;
+
+  }
+
+
+  notes.innerHTML = html;
+
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+function goTo(page){
+
+  document
+    .querySelectorAll(".page")
+    .forEach(section => {
+
+      section.classList.remove(
+        "active"
+      );
+
+    });
+
+
+  document
+    .getElementById(
+      "page-" + page
+    )
+    .classList.add("active");
+
+
+  document
+    .querySelectorAll(".nav-btn")
+    .forEach(button => {
+
+      button.classList.toggle(
+        "active",
+        button.dataset.page === page
+      );
+
+    });
+
+
+  if(page === "products"){
+
+    renderProducts();
+
+  }
+
+
+  if(page === "cart"){
+
+    renderCart();
+
+  }
+
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+/* =========================================================
+   NAV EVENTS
+========================================================= */
+
+document
+  .querySelectorAll(".nav-btn")
+  .forEach(button => {
+
+    button.addEventListener(
+      "click",
+      () => {
+
+        goTo(
+          button.dataset.page
+        );
+
+      }
+    );
+
+  });
+
+
+/* =========================================================
+   FILTER EVENTS
+========================================================= */
+
+document
+  .getElementById("search")
+  .addEventListener(
+    "input",
+    renderProducts
+  );
+
+
+document
+  .querySelectorAll(
+    ".water,.level"
+  )
+  .forEach(input => {
+
+    input.addEventListener(
+      "change",
+      renderProducts
+    );
+
+  });
+
+
+document
+  .getElementById("saleOnly")
+  .addEventListener(
+    "change",
+    renderProducts
+  );
+
+
+document
+  .getElementById("stockOnly")
+  .addEventListener(
+    "change",
+    renderProducts
+  );
+
+
+/* =========================================================
+   CHECKOUT
+========================================================= */
+
+document
+  .getElementById("checkoutButton")
+  .addEventListener(
+    "click",
+    () => {
+
+      if(cartCount() === 0){
+        return;
+      }
+
+      alert(
+        "ขอบคุณสำหรับคำสั่งซื้อจากร้านท่าเรือเบ็ด 🎣\n\n" +
+        "ระบบนี้เป็นเว็บไซต์ตัวอย่าง " +
+        "ยังไม่ได้เชื่อมต่อระบบชำระเงินจริง"
+      );
+
+    }
+  );
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
 renderHome();
+
 renderProducts();
-renderCartBadge();
+
+renderCart();
+
+updateCartBadge();
+
 </script>
+
 </body>
 </html>
